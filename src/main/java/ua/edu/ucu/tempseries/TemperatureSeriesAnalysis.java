@@ -12,8 +12,9 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
+        final int minTemperature = -273;
         for (double temperature: temperatureSeries) {
-            if (temperature < -273) {
+            if (temperature < minTemperature) {
                 throw new InputMismatchException();
             }
         }
@@ -83,8 +84,8 @@ public class TemperatureSeriesAnalysis {
 
         double closest = Double.NEGATIVE_INFINITY;
         for (double temperature : this.temperatureSeries) {
-            if (Math.abs(closest - tempValue) >
-                    Math.abs(temperature - tempValue)) {
+            if (Math.abs(closest - tempValue)
+                    > Math.abs(temperature - tempValue)) {
                 closest = temperature;
             }
 //            if (Math.abs(closest - tempValue) == Math.abs(temperature - tempValue)) {
@@ -127,8 +128,9 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TempSummaryStatistics summaryStatistics() {
-        TempSummaryStatistics summary = new TempSummaryStatistics(this.average(),
-                this.deviation(), this.min(), this.max());
+        ifEmpty();
+        TempSummaryStatistics summary = new TempSummaryStatistics(
+                this.average(), this.deviation(), this.min(), this.max());
         return summary;
     }
 
