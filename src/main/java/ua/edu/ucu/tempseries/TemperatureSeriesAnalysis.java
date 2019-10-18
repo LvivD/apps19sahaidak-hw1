@@ -8,17 +8,17 @@ public class TemperatureSeriesAnalysis {
     private double[] temperatureSeries;
 
     public TemperatureSeriesAnalysis() {
-
+        this.temperatureSeries = new double[0];
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        final int MinTemperature = -273;
+        final int MIN_TEMPERATURE = -273;
         for (double temperature: temperatureSeries) {
-            if (temperature < MinTemperature) {
+            if (temperature < MIN_TEMPERATURE) {
                 throw new InputMismatchException();
             }
         }
-        this.temperatureSeries = temperatureSeries;
+        this.temperatureSeries = temperatureSeries.clone();
     }
 
     private void ifEmpty() throws IllegalArgumentException {
