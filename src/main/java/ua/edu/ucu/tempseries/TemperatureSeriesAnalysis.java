@@ -12,9 +12,9 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        final int minTemperature = -273;
+        final int MinTemperature = -273;
         for (double temperature: temperatureSeries) {
-            if (temperature < minTemperature) {
+            if (temperature < MinTemperature) {
                 throw new InputMismatchException();
             }
         }
@@ -88,7 +88,6 @@ public class TemperatureSeriesAnalysis {
                     > Math.abs(temperature - tempValue)) {
                 closest = temperature;
             }
-//            if (Math.abs(closest - tempValue) == Math.abs(temperature - tempValue)) {
             if (Objects.equals(Math.abs(closest - tempValue),
                     Math.abs(temperature - tempValue))) {
                 closest = Math.max(closest, temperature);
