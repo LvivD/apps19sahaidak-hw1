@@ -1,5 +1,6 @@
 package ua.edu.ucu.tempseries;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Objects;
 
@@ -109,7 +110,7 @@ public class TemperatureSeriesAnalysis {
             }
         }
 
-        return lessThenSeries;
+        return Arrays.copyOf(lessThenSeries, i);
     }
 
     public double[] findTempsGreaterThen(double tempValue) {
@@ -123,7 +124,7 @@ public class TemperatureSeriesAnalysis {
             }
         }
 
-        return greaterThenSeries;
+        return Arrays.copyOf(greaterThenSeries, i);
     }
 
     public TempSummaryStatistics summaryStatistics() {
@@ -134,6 +135,18 @@ public class TemperatureSeriesAnalysis {
     }
 
     public int addTemps(double... temps) {
-        return 0;
+        double[] newTemperatureSeries =
+                new double[this.temperatureSeries.length + temps.length];
+        int i;
+        int j;
+        for (i = 0; i < this.temperatureSeries.length; i++) {
+            newTemperatureSeries[i] = this.temperatureSeries[i];
+        }
+        for (j = i; j < this.temperatureSeries.length + temps.length; j++) {
+            newTemperatureSeries[j] = temps[j-i];
+        }
+            this.temperatureSeries = newTemperatureSeries;
+
+        return j;
     }
 }
