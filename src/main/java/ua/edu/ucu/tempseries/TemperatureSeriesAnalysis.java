@@ -7,15 +7,16 @@ import java.util.Objects;
 public class TemperatureSeriesAnalysis {
 
     private double[] temperatureSeries;
+    final int MIN_TEMPERATURE = -273;
 
     public TemperatureSeriesAnalysis() {
         this.temperatureSeries = new double[0];
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        final int MIN_TEMPERATURE = -273;
+
         for (double temperature: temperatureSeries) {
-            if (temperature < MIN_TEMPERATURE) {
+            if (temperature < this.MIN_TEMPERATURE) {
                 throw new InputMismatchException();
             }
         }
@@ -143,6 +144,9 @@ public class TemperatureSeriesAnalysis {
             newTemperatureSeries[i] = this.temperatureSeries[i];
         }
         for (j = i; j < this.temperatureSeries.length + temps.length; j++) {
+            if (temps[j-i] < this.MIN_TEMPERATURE) {
+                throw new InputMismatchException();
+            }
             newTemperatureSeries[j] = temps[j-i];
         }
             this.temperatureSeries = newTemperatureSeries;

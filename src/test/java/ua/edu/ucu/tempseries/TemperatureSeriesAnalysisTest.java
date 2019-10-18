@@ -7,13 +7,16 @@ import org.junit.Test;
 
 import java.util.InputMismatchException;
 
-//private double[] temperatureSeries;
+
 
 public class TemperatureSeriesAnalysisTest {
+    private double[] temperatureSeries;
+    private double[] emptyTemperatureSeries;
+
     @Before
     public void setUp() throws Exception {
-        double[] temperatureSeries = {3.0, -5.0, 1.0, 5.0};
-        double[] emptyTemperatureSeries = {};
+        temperatureSeries = new double[] {3.0, -5.0, 1.0, 5.0};
+        emptyTemperatureSeries = new double[] {};
     }
 
     @Test(expected = InputMismatchException.class)
@@ -284,5 +287,13 @@ public class TemperatureSeriesAnalysisTest {
 
 
         assertEquals(expResult, actualResult, 0.00001);
+    }
+
+    @Test(expected = InputMismatchException.class)
+    public void testAddTempsWithWrongData() {
+        double[] temperatureSeries = {3.0, -5.0, 1.0, 5.0};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+
+        int actualResult = seriesAnalysis.addTemps(123.0, -290.0);
     }
 }
