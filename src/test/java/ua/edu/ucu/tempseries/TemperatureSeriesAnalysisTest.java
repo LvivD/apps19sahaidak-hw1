@@ -272,4 +272,17 @@ public class TemperatureSeriesAnalysisTest {
 
         assertEquals(expResultMaxTemp, actualResultMaxTemp, 0.00001);
     }
+
+    @Test
+    public void testAddTemps() {
+        double[] temperatureSeries = {3.0, -5.0, 1.0, 5.0};
+        TemperatureSeriesAnalysis seriesAnalysis = new TemperatureSeriesAnalysis(temperatureSeries);
+
+        int expResult = 6;
+
+        int actualResult = seriesAnalysis.addTemps(123.0, -250.0);
+
+
+        assertEquals(expResult, actualResult, 0.00001);
+    }
 }
