@@ -2,16 +2,22 @@ package ua.edu.ucu.tempseries;
 
 public class TemperatureSeriesAnalysis {
 
+    private double[] temperatureSeries;
+
     public TemperatureSeriesAnalysis() {
 
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-
+        this.temperatureSeries = temperatureSeries;
     }
 
     public double average() {
-        return -1;
+        double sum = 0;
+        for (int i = 0; i < this.temperatureSeries.length; i++) {
+            sum += this.temperatureSeries[i];
+        }
+        return sum/this.temperatureSeries.length;
     }
 
     public double deviation() {
