@@ -1,24 +1,30 @@
 package ua.edu.ucu.tempseries;
 
 import java.util.InputMismatchException;
+import java.util.Objects;
 
 public class TemperatureSeriesAnalysis {
 
     private double[] temperatureSeries;
-
-    private void ifEmpty() throws InputMismatchException{
-        if (this.temperatureSeries.length == 0)
-        {
-            throw new InputMismatchException();
-        }
-    }
 
     public TemperatureSeriesAnalysis() {
 
     }
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
+        for (double temperature: temperatureSeries) {
+            if (temperature < -273) {
+                throw new InputMismatchException();
+            }
+        }
         this.temperatureSeries = temperatureSeries;
+    }
+
+    private void ifEmpty() throws IllegalArgumentException {
+        if (this.temperatureSeries.length == 0)
+        {
+            throw new IllegalArgumentException();
+        }
     }
 
     public double average() {
@@ -36,7 +42,7 @@ public class TemperatureSeriesAnalysis {
 
         double squareSum = 0;
         for (double temperature : this.temperatureSeries) {
-            squareSum += Math.pow(temperature, 2);
+            squareSum += temperature*temperature;
         }
 
         return Math.sqrt(squareSum/this.temperatureSeries.length);
@@ -45,7 +51,7 @@ public class TemperatureSeriesAnalysis {
     public double min() {
         ifEmpty();
 
-        double min = Double.POSITIVE_INFINITY;;
+        double min = Double.POSITIVE_INFINITY;
         for (double temperature : this.temperatureSeries) {
             if (min > temperature) {
                 min = temperature;
@@ -58,7 +64,7 @@ public class TemperatureSeriesAnalysis {
     public double max() {
         ifEmpty();
 
-        double max = Double.NEGATIVE_INFINITY;;
+        double max = Double.NEGATIVE_INFINITY;
         for (double temperature : this.temperatureSeries) {
             if (max < temperature) {
                 max = temperature;
@@ -69,7 +75,7 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double findTempClosestToZero() {
-        return findTempClosestToValue(0);
+        return this.findTempClosestToValue(0);
     }
 
     public double findTempClosestToValue(double tempValue) {
@@ -77,10 +83,13 @@ public class TemperatureSeriesAnalysis {
 
         double closest = Double.NEGATIVE_INFINITY;
         for (double temperature : this.temperatureSeries) {
-            if (Math.abs(closest - tempValue) > Math.abs(temperature - tempValue)) {
+            if (Math.abs(closest - tempValue) >
+                    Math.abs(temperature - tempValue)) {
                 closest = temperature;
             }
-            if (Math.abs(closest - tempValue) == Math.abs(temperature - tempValue)) {
+//            if (Math.abs(closest - tempValue) == Math.abs(temperature - tempValue)) {
+            if (Objects.equals(Math.abs(closest - tempValue),
+                    Math.abs(temperature - tempValue))) {
                 closest = Math.max(closest, temperature);
             }
         }
@@ -118,7 +127,9 @@ public class TemperatureSeriesAnalysis {
     }
 
     public TempSummaryStatistics summaryStatistics() {
-        return null;
+        TempSummaryStatistics summary = new TempSummaryStatistics(this.average(),
+                this.deviation(), this.min(), this.max());
+        return summary;
     }
 
     public int addTemps(double... temps) {
